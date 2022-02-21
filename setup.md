@@ -13,6 +13,7 @@
     2. This loads all Star Gates as edges into graph
     3. This needs to run after system vertices are created since it creates edges from to vertices
 5. Run `indexing.bat` to add the necessary indexes
+
 ## Notes
 
 The way this setup works is to allow reloading and updating running the same functions. This is not the optimal loading

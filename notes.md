@@ -22,7 +22,8 @@ This allows us to ask the graph system "questions". For instance given a movie n
 movie? this would be written in Gremlin as `g.V().has('movie', 'title', 'Titanic').outE("actor_in").inV().toList()`
 
 Step by step this is addressing the graph traversal for all vertices with the `movie` label and the `title=Titanic`. We
-then traverse outwards on an outwards Edge with the Label `actor_in`. We then enter the vertex on the Edge and solve as a List.
+then traverse outwards on an outwards Edge with the Label `actor_in`. We then enter the vertex on the Edge and solve as
+a List.
 
 Vertices and Edges both can have properties which can be used for filtering and traversal analysis. Complex graph
 queries can be implemented and can answer very complex questions.
@@ -43,6 +44,7 @@ even with Spark as the Graph Computer for expensive VertexComputing.
 ## Final Thoughts
 
 Given more time I would definitely clean up the code, make it more generic in some ways. Coming to terms with working in
-Python was a challenge at first but the language is but a tool. Sometimes you need more tools in your toolbox. Even if I do not make the cut I thoroughly enjoyed the task
+Python was a challenge at first but the language is but a tool. Sometimes you need more tools in your toolbox. Even if I
+do not make the cut I thoroughly enjoyed the task
 
 PS. It is 5am.
