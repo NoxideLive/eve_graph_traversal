@@ -1,0 +1,59 @@
+# Copyright 2019 JanusGraph Authors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# From https://github.com/JanusGraph/janusgraph-docker/blob/master/docker-compose-cql-es.yml
+
+version: "3"
+
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+  web:
+    build: .
+    entrypoint: /code/docker-entrypoint.sh
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - JANUS_URL=jce-janusgraph
+      - POSTGRES_NAME=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=db
+    depends_on:
+      - db
+      - janusgraph
+  janusgraph:
+    image: docker.io/janusgraph/janusgraph:latest
+    container_name: jce-janusgraph
+    environment:
+      janusgraph.storage.backend: "inmemory"
+    ports:
+      - "8182:8182"
+    healthcheck:
+      test: [ "CMD", "bin/gremlin.sh", "-e", "scripts/remote-connect.groovy" ]
+      interval: 10s
+      timeout: 30s
+      retries: 3
+
+
+volumes:
+  janusgraph-default-data:
